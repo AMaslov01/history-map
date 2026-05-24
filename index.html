@@ -3,53 +3,37 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=1440" />
-  <title>Карта России — Атлас границ</title>
+  <title>Карта России — Атлас исторических границ</title>
+
   <link rel="stylesheet" href="styles.css?v=8" />
-  <link rel="stylesheet" href="redesign.css?v=2" />
+  <link rel="stylesheet" href="redesign.css?v=11" />
+
+  <!-- React + Babel for inline JSX -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+          integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+          integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+          integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+          crossorigin="anonymous"></script>
+
+  <!-- 3D globe stack: three.js, globe.gl, topojson-client (for borders),
+       polygon-clipping (to intersect historical territories with land) -->
+  <script src="https://unpkg.com/three@0.155.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/globe.gl@2.32.5/dist/globe.gl.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script src="https://unpkg.com/polygon-clipping@0.15.7/dist/polygon-clipping.umd.js"></script>
 </head>
 <body>
   <div id="root"></div>
-  <script>
-    // Suppress the benign Chromium "ResizeObserver loop completed with
-    // undelivered notifications" warning. We wrap the global ResizeObserver
-    // so any callback is deferred to the next frame, breaking the loop, and
-    // we also intercept the error event/console output as belt + braces.
-    (function(){
-      const RO = window.ResizeObserver;
-      if (RO){
-        window.ResizeObserver = class extends RO {
-          constructor(cb){
-            let raf = 0;
-            super((entries, obs) => {
-              cancelAnimationFrame(raf);
-              raf = requestAnimationFrame(() => { try { cb(entries, obs); } catch(_){} });
-            });
-          }
-        };
-      }
-      const __origErr = console.error;
-      console.error = function(...args){
-        const msg = args && args[0];
-        if (typeof msg === "string" && /ResizeObserver loop/.test(msg)) return;
-        __origErr.apply(console, args);
-      };
-      window.addEventListener("error", (e) => {
-        if (e && e.message && /ResizeObserver loop/.test(e.message)){
-          e.stopImmediatePropagation();
-          e.preventDefault();
-          return false;
-        }
-      }, true);
-    })();
-  </script>
-
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
   <script src="data.js?v=3"></script>
+  <script src="borders-data.js?v=1"></script>
   <script type="text/babel" src="tweaks-panel.jsx?v=3"></script>
-  <script type="text/babel" src="landing.jsx?v=5"></script>
-  <script type="text/babel" src="app.jsx?v=4"></script>
+  <script type="text/babel" src="landing.jsx?v=6"></script>
+  <script type="text/babel" src="globe-map-v2.jsx?v=9"></script>
+  <script type="text/babel" src="app.jsx?v=8"></script>
 </body>
 </html>

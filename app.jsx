@@ -4,12 +4,12 @@ const { useState, useEffect, useRef, useMemo, useCallback } = React;
 // Background reference outline = modern Russia
 const REF_OUTLINE = window.MODERN_RUSSIA;
 
-function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-function findPeriod(year){
+function findPeriod(year) {
   // Returns index of the latest period whose .year <= given year
   let idx = 0;
-  for (let i = 0; i < PERIODS.length; i++){
+  for (let i = 0; i < PERIODS.length; i++) {
     if (PERIODS[i].year <= year) idx = i;
     else break;
   }
@@ -17,7 +17,7 @@ function findPeriod(year){
 }
 
 // --- Header HUD ----------------------------------------------------------
-function HudTop({ year, periodIdx }){
+function HudTop({ year, periodIdx }) {
   return (
     <div className="hud-top">
       <div className="brand">
@@ -33,8 +33,7 @@ function HudTop({ year, periodIdx }){
         </div>
       </div>
       <div className="hud-meta">
-        <div className="hud-chip"><span className="dot"></span>СИГНАЛ</div>
-        <div className="hud-chip">ЭПОХА {String(periodIdx+1).padStart(2,"0")}/{String(PERIODS.length).padStart(2,"0")}</div>
+        <div className="hud-chip">ЭПОХА {String(periodIdx + 1).padStart(2, "0")}/{String(PERIODS.length).padStart(2, "0")}</div>
         <div className="hud-chip">ГОД {year}</div>
       </div>
     </div>
@@ -42,18 +41,18 @@ function HudTop({ year, periodIdx }){
 }
 
 // --- Left stack ----------------------------------------------------------
-function LeftStack({ period }){
+// //<div className="row"><b>ЗЕМЕЛЬ</b><span className="val">{period.territories.length}</span></div>//
+function LeftStack({ period }) {
   return (
     <div className="left-stack">
       <div className="row"><b>ЭПОХА</b><span className="val">{period.subtitle}</span></div>
       <div className="row"><b>ГОД</b><span className="val">{period.year}</span></div>
-      <div className="row"><b>ЗЕМЕЛЬ</b><span className="val">{period.territories.length}</span></div>
     </div>
   );
 }
 
 // --- Year banner --------------------------------------------------------
-function YearBanner({ year, label }){
+function YearBanner({ year, label }) {
   return (
     <div className="year-banner">
       <div className="year">{year}</div>
@@ -63,12 +62,12 @@ function YearBanner({ year, label }){
 }
 
 // --- Info panel ---------------------------------------------------------
-function InfoPanel({ period, periodIdx }){
+function InfoPanel({ period, periodIdx }) {
   return (
     <div className="info" key={periodIdx} style={{ animation: "fade-in 0.5s ease" }}>
       <div className="info-head">
         <div className="tag">// ИСТОРИЧЕСКАЯ СПРАВКА</div>
-        <div className="idx">[{String(periodIdx+1).padStart(2,"0")}/{String(PERIODS.length).padStart(2,"0")}]</div>
+        <div className="idx">[{String(periodIdx + 1).padStart(2, "0")}/{String(PERIODS.length).padStart(2, "0")}]</div>
       </div>
       <h2>{period.title}</h2>
       <div className="sub">{period.subtitle} · {period.year}</div>
@@ -87,7 +86,7 @@ function InfoPanel({ period, periodIdx }){
 }
 
 // --- Map ----------------------------------------------------------------
-function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }){
+function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }) {
   const visibleCities = useMemo(
     () => CITIES.filter(c =>
       c.since <= period.year && (!c.until || period.year < c.until)
@@ -111,10 +110,10 @@ function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }){
           <stop offset="100%" stopColor="#ff2d95" stopOpacity="0" />
         </radialGradient>
         <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feGaussianBlur stdDeviation="3" result="blur" />
           <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
       </defs>
@@ -123,13 +122,13 @@ function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }){
       {showGrid && (
         <g className="graticule">
           {lons.map((lon, i) => (
-            <line key={"lon"+i}
+            <line key={"lon" + i}
               x1={xForLon(lon)} y1="40"
               x2={xForLon(lon)} y2="760"
               className={"grid-line " + ((lon % 40 === 0) ? "major" : "")} />
           ))}
           {lats.map((lat, i) => (
-            <line key={"lat"+i}
+            <line key={"lat" + i}
               x1="20" y1={yForLat(lat)}
               x2="1580" y2={yForLat(lat)}
               className={"grid-line " + ((lat % 20 === 0) ? "major" : "")} />
@@ -161,7 +160,7 @@ function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }){
 
       {/* Compass */}
       <g className="compass" transform="translate(80, 60)">
-        <circle cx="0" cy="0" r="22" fill="none" stroke="rgba(255,82,177,0.5)" strokeWidth="1"/>
+        <circle cx="0" cy="0" r="22" fill="none" stroke="rgba(255,82,177,0.5)" strokeWidth="1" />
         <circle cx="0" cy="0" r="3" fill="#ff52b1" />
         <line x1="0" y1="-20" x2="0" y2="-32" stroke="#ff52b1" strokeWidth="1.2" />
         <line x1="0" y1="20" x2="0" y2="32" stroke="rgba(255,82,177,0.4)" strokeWidth="1.2" />
@@ -177,18 +176,18 @@ function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }){
         <line x1="90" y1="-3" x2="90" y2="3" stroke="rgba(255,138,216,0.6)" strokeWidth="1.2" />
         <line x1="180" y1="-4" x2="180" y2="4" stroke="rgba(255,138,216,0.8)" strokeWidth="1.5" />
         <text x="0" y="20" fill="rgba(255,138,216,0.7)"
-              fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">
+          fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">
           ~2000 км
         </text>
       </g>
 
       {/* Territories */}
-      <g key={"period-"+periodIdx} className="territories">
+      <g key={"period-" + periodIdx} className="territories">
         {period.territories.map((t, i) => {
           const paths = t.paths || (t.path ? [t.path] : []);
           return (
             <g key={i}
-               style={{ animation: "terr-in 0.9s ease both", animationDelay: (i * 0.08) + "s" }}>
+              style={{ animation: "terr-in 0.9s ease both", animationDelay: (i * 0.08) + "s" }}>
               {paths.map((d, j) => (
                 <path
                   key={j}
@@ -210,8 +209,8 @@ function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }){
         <g className="cities">
           {visibleCities.map((c, i) => (
             <g key={c.name} className={"city city-" + (c.kind || "ru")}
-               transform={`translate(${c.x}, ${c.y})`}
-               style={{ animation: "city-in 0.6s ease both", animationDelay: (i*0.04)+"s" }}>
+              transform={`translate(${c.x}, ${c.y})`}
+              style={{ animation: "city-in 0.6s ease both", animationDelay: (i * 0.04) + "s" }}>
               {c.kind === "cap" ? (
                 <>
                   <circle className="ring" cx="0" cy="0" r="5" />
@@ -235,7 +234,7 @@ function AtlasMap({ period, periodIdx, showGrid, showCities, showRef }){
 }
 
 // --- Timeline -----------------------------------------------------------
-function Timeline({ year, setYear, playing, setPlaying, speed, setSpeed, periodIdx }){
+function Timeline({ year, setYear, playing, setPlaying, speed, setSpeed, periodIdx }) {
   const trackRef = useRef(null);
   const dragging = useRef(false);
 
@@ -257,13 +256,13 @@ function Timeline({ year, setYear, playing, setPlaying, speed, setSpeed, periodI
   };
   const onPointerUp = (e) => {
     dragging.current = false;
-    try { trackRef.current.releasePointerCapture(e.pointerId); } catch(_) {}
+    try { trackRef.current.releasePointerCapture(e.pointerId); } catch (_) { }
   };
 
   // Major tick years (round centuries / events)
   const majorTickYears = [900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000];
   const minorTickYears = [];
-  for (let y = 900; y <= 2000; y += 50){
+  for (let y = 900; y <= 2000; y += 50) {
     if (!majorTickYears.includes(y)) minorTickYears.push(y);
   }
 
@@ -284,12 +283,12 @@ function Timeline({ year, setYear, playing, setPlaying, speed, setSpeed, periodI
             setYear(prev.year); setPlaying(false);
           }}>‹ НАЗАД</button>
           <button className="btn" onClick={() => {
-            const next = PERIODS[Math.min(PERIODS.length-1, periodIdx + 1)];
+            const next = PERIODS[Math.min(PERIODS.length - 1, periodIdx + 1)];
             setYear(next.year); setPlaying(false);
           }}>ВПЕРЁД ›</button>
           <div className="speed-pill">
             {[0.5, 1, 2, 4].map(s => (
-              <button key={s} className={speed===s?"on":""} onClick={() => setSpeed(s)}>
+              <button key={s} className={speed === s ? "on" : ""} onClick={() => setSpeed(s)}>
                 {s}×
               </button>
             ))}
@@ -308,19 +307,19 @@ function Timeline({ year, setYear, playing, setPlaying, speed, setSpeed, periodI
           onPointerCancel={onPointerUp}>
         </div>
         <div className="slider-hit"
-             onPointerDown={onPointerDown}
-             onPointerMove={onPointerMove}
-             onPointerUp={onPointerUp}
-             onPointerCancel={onPointerUp}
-             onClick={(e) => setYear(yearFromX(e.clientX))} />
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+          onClick={(e) => setYear(yearFromX(e.clientX))} />
 
         {/* minor ticks */}
         {minorTickYears.map(y => (
-          <div key={"mn"+y} className="tick" style={{ left: pctFromYear(y) + "%" }} />
+          <div key={"mn" + y} className="tick" style={{ left: pctFromYear(y) + "%" }} />
         ))}
         {/* major ticks */}
         {majorTickYears.map(y => (
-          <React.Fragment key={"mj"+y}>
+          <React.Fragment key={"mj" + y}>
             <div className="tick major" style={{ left: pctFromYear(y) + "%" }} />
             <div className="tick-label" style={{ left: pctFromYear(y) + "%" }}>{y}</div>
           </React.Fragment>
@@ -358,7 +357,7 @@ function Timeline({ year, setYear, playing, setPlaying, speed, setSpeed, periodI
 }
 
 // --- Background --------------------------------------------------------
-function Background(){
+function Background() {
   return (
     <div className="bg-shell">
       <div className="stars"></div>
@@ -377,16 +376,16 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "palette": "magenta-cyan"
 }/*EDITMODE-END*/;
 
-function ChronosTweaks(){
+function ChronosTweaks() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   // Apply palette by setting CSS vars on :root
   useEffect(() => {
     const root = document.documentElement;
     const palettes = {
-      "magenta-cyan": { magenta: "#ff2d95", magentaHot: "#ff52b1", cyan: "#22e4ff", cyanSoft:"#7ff3ff", pink:"#ff8ad8" },
-      "violet-mint":  { magenta: "#b537f2", magentaHot: "#cc5cff", cyan: "#6cffb3", cyanSoft:"#b0ffd6", pink:"#d8a8ff" },
-      "amber-cyan":   { magenta: "#ff8a3d", magentaHot: "#ffaa66", cyan: "#22e4ff", cyanSoft:"#7ff3ff", pink:"#ffc299" }
+      "magenta-cyan": { magenta: "#ff2d95", magentaHot: "#ff52b1", cyan: "#22e4ff", cyanSoft: "#7ff3ff", pink: "#ff8ad8" },
+      "violet-mint": { magenta: "#b537f2", magentaHot: "#cc5cff", cyan: "#6cffb3", cyanSoft: "#b0ffd6", pink: "#d8a8ff" },
+      "amber-cyan": { magenta: "#ff8a3d", magentaHot: "#ffaa66", cyan: "#22e4ff", cyanSoft: "#7ff3ff", pink: "#ffc299" }
     };
     const p = palettes[t.palette] || palettes["magenta-cyan"];
     root.style.setProperty("--magenta", p.magenta);
@@ -416,12 +415,12 @@ function ChronosTweaks(){
         <TweakToggle label="Контур и соседи" value={t.showRef} onChange={v => setTweak("showRef", v)} />
       </TweakSection>
       <TweakSection title="Визуальный стиль">
-        <TweakRadio label="Свечение" value={t.glow} options={["low","high"]} onChange={v => setTweak("glow", v)} />
+        <TweakRadio label="Свечение" value={t.glow} options={["low", "high"]} onChange={v => setTweak("glow", v)} />
         <TweakSelect label="Палитра" value={t.palette}
           options={[
-            { value:"magenta-cyan", label:"Маджента / Голубой" },
-            { value:"violet-mint",  label:"Фиолет / Мята" },
-            { value:"amber-cyan",   label:"Янтарь / Голубой" }
+            { value: "magenta-cyan", label: "Маджента / Голубой" },
+            { value: "violet-mint", label: "Фиолет / Мята" },
+            { value: "amber-cyan", label: "Янтарь / Голубой" }
           ]}
           onChange={v => setTweak("palette", v)} />
       </TweakSection>
@@ -430,21 +429,35 @@ function ChronosTweaks(){
 }
 
 // --- App ---------------------------------------------------------------
-function App(){
-  const [entered, setEntered] = useState(false);
+function App() {
+  // 'landing' → 'map' (3D globe). Landing fades while the globe canvas
+  // fades up underneath — the SVG sunrise rim and the cobe globe overlap
+  // for the seamless dive-in.
+  const [phase, setPhase] = useState("landing");
+  const [keepLanding, setKeepLanding] = useState(true);
+  const entered = phase !== "landing";
   const [shellIn, setShellIn] = useState(false);
   const [year, setYear] = useState(YEAR_MIN);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
   const [tweaks, setTweaks] = useState(TWEAK_DEFAULTS);
 
-  // Stagger the shell fade-in slightly after Landing unmounts
+  // Mount the map shell immediately when entering, so the globe is already
+  // alive while the landing is fading out on top of it.
   useEffect(() => {
-    if (entered){
+    if (phase === "map") {
       const t = setTimeout(() => setShellIn(true), 40);
       return () => clearTimeout(t);
     }
-  }, [entered]);
+  }, [phase]);
+
+  // After the landing fade finishes, unmount it for good.
+  useEffect(() => {
+    if (phase === "map") {
+      const t = setTimeout(() => setKeepLanding(false), 1300);
+      return () => clearTimeout(t);
+    }
+  }, [phase]);
 
   // Listen for tweak changes
   useEffect(() => {
@@ -468,7 +481,7 @@ function App(){
         // ~30 years per second at 1× speed
         const inc = (dt / 1000) * 30 * speed;
         const ny = y + inc;
-        if (ny >= YEAR_MAX){
+        if (ny >= YEAR_MAX) {
           setPlaying(false);
           return YEAR_MAX;
         }
@@ -484,22 +497,22 @@ function App(){
   useEffect(() => {
     if (!entered) return;
     const onKey = (e) => {
-      if (e.key === " "){
+      if (e.key === " ") {
         e.preventDefault();
         setPlaying(p => !p);
       }
-      if (e.key === "ArrowRight"){
+      if (e.key === "ArrowRight") {
         const step = e.shiftKey ? 10 : 1;
         setYear(y => clamp(Math.round(y) + step, YEAR_MIN, YEAR_MAX));
         setPlaying(false);
       }
-      if (e.key === "ArrowLeft"){
+      if (e.key === "ArrowLeft") {
         const step = e.shiftKey ? 10 : 1;
         setYear(y => clamp(Math.round(y) - step, YEAR_MIN, YEAR_MAX));
         setPlaying(false);
       }
-      if (e.key === "Home"){ setYear(YEAR_MIN); setPlaying(false); }
-      if (e.key === "End"){  setYear(YEAR_MAX); setPlaying(false); }
+      if (e.key === "Home") { setYear(YEAR_MIN); setPlaying(false); }
+      if (e.key === "End") { setYear(YEAR_MAX); setPlaying(false); }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -509,7 +522,8 @@ function App(){
 
   return (
     <>
-      {!entered && <Landing onEnter={() => setEntered(true)} />}
+      {keepLanding && phase === "landing" && <Landing onEnter={() => setPhase("map")} />}
+      {keepLanding && phase === "map" && <Landing onEnter={() => { }} initialExiting={true} />}
       <div className={"app-shell " + (shellIn ? "in" : "")}>
         <Background />
         <HudTop year={yearInt} periodIdx={periodIdx} />
@@ -517,12 +531,12 @@ function App(){
         <LeftStack period={period} />
         <div className="stage">
           <div className="map-wrap">
-            <AtlasMap
+            <Globe3DMap
               period={period}
               periodIdx={periodIdx}
-              showGrid={tweaks.showGrid}
               showCities={tweaks.showCities}
               showRef={tweaks.showRef}
+              autoSpin={false}
             />
           </div>
         </div>

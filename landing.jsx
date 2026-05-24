@@ -11,13 +11,15 @@ const { useState, useEffect, useRef } = React;
 // if the camera is diving toward Earth; the hero then fades and
 // the map view takes over.
 // --------------------------------------------------------------
-function Hero({ onEnter }) {
-  const [exiting, setExiting] = useState(false);
+function Hero({ onEnter, initialExiting }) {
+  const [exiting, setExiting] = useState(!!initialExiting);
 
   const begin = () => {
     if (exiting) return;
     setExiting(true);
-    setTimeout(() => onEnter && onEnter(), 1500);
+    // Hand off to the cobe-globe transition almost immediately so the SVG
+    // planet and the 3D globe overlap during the dive-in.
+    setTimeout(() => onEnter && onEnter(), 350);
   };
 
   return (
@@ -30,27 +32,9 @@ function Hero({ onEnter }) {
           <span className="hero-brand-glyph">◐</span>
           <span className="hero-brand-text">Карта&nbsp;России</span>
         </div>
-        <nav className="hero-nav-links" aria-label="Разделы">
-          <a className="hero-nav-link is-active" href="#">Главная</a>
-          <a className="hero-nav-link" href="#">Эпохи</a>
-          <a className="hero-nav-link" href="#">События</a>
-          <a className="hero-nav-link" href="#">О&nbsp;проекте</a>
-        </nav>
-        <button className="hero-nav-cta" onClick={begin}>
-          Смотреть карту
-          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-            <path d="M3 7 H11 M8 4 L11 7 L8 10" stroke="currentColor" strokeWidth="1.6"
-                  fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
       </header>
 
       <div className="hero-center">
-        <div className="hero-pill">
-          <span className="hero-pill-tag">Новое</span>
-          <span className="hero-pill-text">Атлас границ России&nbsp;·&nbsp;862&nbsp;—&nbsp;2020</span>
-        </div>
-
         <h1 className="hero-title">
           Сквозь Тысячу&nbsp;Лет<br />
           <span className="hero-title-em">Российской&nbsp;Истории</span>
@@ -70,30 +54,8 @@ function Hero({ onEnter }) {
                     fill="none" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <button className="hero-cta-ghost" type="button">
-            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-              <circle cx="9" cy="9" r="8.25" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5"/>
-              <path d="M7 5.5 L13 9 L7 12.5 Z" fill="currentColor"/>
-            </svg>
-            <span>Видео обзор</span>
-          </button>
         </div>
       </div>
-
-      <footer className="hero-footer">
-        <div className="hero-footer-label">Двадцать одна эпоха</div>
-        <div className="hero-eras">
-          <span>Киевская&nbsp;Русь</span>
-          <span className="dot" aria-hidden="true">·</span>
-          <span>Московское&nbsp;царство</span>
-          <span className="dot" aria-hidden="true">·</span>
-          <span>Российская&nbsp;империя</span>
-          <span className="dot" aria-hidden="true">·</span>
-          <span>СССР</span>
-          <span className="dot" aria-hidden="true">·</span>
-          <span>Российская&nbsp;Федерация</span>
-        </div>
-      </footer>
     </div>
   );
 }
