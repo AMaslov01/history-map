@@ -145,32 +145,30 @@ window.YEAR_MAX = 2020;
 // kind: "ru" (Russian historical city, bright magenta+cyan)
 //       "cap" (foreign capital, dimmer cyan dot)
 window.CITIES = [
-  // Russian historical / current cities ----------------------------------
-  { name: "Новгород",     x: 200,  y: 290, since: 862,  until: 1550, kind: "ru" },
-  { name: "Псков",        x: 175,  y: 308, since: 862,  until: 1520, kind: "ru" },
-  { name: "Москва",       x: 259,  y: 384, since: 1147, kind: "ru" },
-  { name: "Казань",       x: 368,  y: 388, since: 1552, kind: "ru" },
-  { name: "Тобольск",     x: 549,  y: 336, since: 1587, kind: "ru" },
-  { name: "Якутск",       x: 1124, y: 260, since: 1632, kind: "ru" },
-  { name: "С.-Петербург", x: 192,  y: 302, since: 1703, kind: "ru" },
-  { name: "Севастополь",  x: 226,  y: 612, since: 1783, kind: "ru" },
-  { name: "Владивосток",  x: 1140, y: 638, since: 1860, kind: "ru" },
-  { name: "Мурманск",     x: 210,  y: 130, since: 1916, kind: "ru" },
-  // Foreign capitals — appear once the modern state exists --------------
-  { name: "Варшава",      x: 75,   y: 442, since: 1500, kind: "cap" },
-  { name: "Киев",         x: 192,  y: 492, since: 882,  kind: "ru" }, // historical Rus + modern UA capital
-  { name: "Минск",        x: 145,  y: 432, since: 1500, kind: "cap" },
-  { name: "Хельсинки",    x: 122,  y: 248, since: 1812, kind: "cap" },
-  { name: "Таллин",       x: 115,  y: 312, since: 1918, kind: "cap" },
-  { name: "Рига",         x: 105,  y: 358, since: 1918, kind: "cap" },
-  { name: "Вильнюс",      x: 115,  y: 405, since: 1918, kind: "cap" },
-  { name: "Тбилиси",      x: 312,  y: 645, since: 1801, kind: "cap" },
-  { name: "Ереван",       x: 308,  y: 685, since: 1918, kind: "cap" },
-  { name: "Баку",         x: 380,  y: 680, since: 1918, kind: "cap" },
-  { name: "Астана",       x: 540,  y: 595, since: 1991, kind: "cap" },
-  { name: "Улан-Батор",   x: 900,  y: 588, since: 1924, kind: "cap" },
-  { name: "Пекин",        x: 1015, y: 645, since: 1421, kind: "cap" },
-  { name: "Токио",        x: 1318, y: 632, since: 1868, kind: "cap" }
+  { name: "Новгород", x: 200, y: 330, since: 862, until: 1550, kind: "ru" },
+  { name: "Псков", x: 172, y: 344, since: 862, until: 1520, kind: "ru" },
+  { name: "Москва", x: 260, y: 385, since: 1147, kind: "ru" },
+  { name: "Казань", x: 368, y: 384, since: 1552, kind: "ru" },
+  { name: "Тобольск", x: 548, y: 336, since: 1587, kind: "ru" },
+  { name: "Якутск", x: 1125, y: 259, since: 1632, kind: "ru" },
+  { name: "С.-Петербург", x: 191, y: 301, since: 1703, kind: "ru" },
+  { name: "Севастополь", x: 221, y: 608, since: 1783, kind: "ru" },
+  { name: "Владивосток", x: 1146, y: 638, since: 1860, kind: "ru" },
+  { name: "Мурманск", x: 217, y: 121, since: 1916, kind: "ru" },
+  { name: "Варшава", x: 103, y: 455, since: 1500, kind: "cap" },
+  { name: "Киев", x: 193, y: 491, since: 882, kind: "ru" },
+  { name: "Минск", x: 165, y: 422, since: 1500, kind: "cap" },
+  { name: "Хельсинки", x: 140, y: 297, since: 1812, kind: "cap" },
+  { name: "Таллин", x: 139, y: 311, since: 1918, kind: "cap" },
+  { name: "Рига", x: 133, y: 361, since: 1918, kind: "cap" },
+  { name: "Вильнюс", x: 144, y: 406, since: 1918, kind: "cap" },
+  { name: "Тбилиси", x: 327, y: 666, since: 1801, kind: "cap" },
+  { name: "Ереван", x: 324, y: 696, since: 1918, kind: "cap" },
+  { name: "Баку", x: 375, y: 692, since: 1918, kind: "cap" },
+  { name: "Астана", x: 577, y: 477, since: 1991, kind: "cap" },
+  { name: "Улан-Батор", x: 911, y: 542, since: 1924, kind: "cap" },
+  { name: "Пекин", x: 1000, y: 702, since: 1421, kind: "cap" },
+  { name: "Токио", x: 1219, y: 786, since: 1868, kind: "cap" },
 ];
 
 // ---- Historical periods --------------------------------------------------

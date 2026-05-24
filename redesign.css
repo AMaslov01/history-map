@@ -371,11 +371,22 @@ html, body{
   box-shadow: 0 0 6px rgba(255, 138, 38, 0.7);
 }
 
-/* Year banner */
+/* Year banner — boxed in the timeline's dark-panel style so it stays legible
+   over the bright satellite globe. */
+.year-banner{
+  background: rgba(15, 12, 10, 0.82);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  padding: 6px 30px 10px;
+}
 .year-banner .year{
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: 80px;
+  font-size: 58px;
+  line-height: 1.05;
   letter-spacing: -0.01em;
   color: var(--text-1);
   text-shadow: 0 0 26px rgba(255, 138, 38, 0.18);

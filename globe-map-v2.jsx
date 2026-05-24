@@ -480,15 +480,14 @@ function Globe3DMap({ period, periodIdx, showCities, showRef, autoSpin = false }
     // Backdrop: modern-day country borders (faint white).
     const modern = countriesRef.current || [];
 
-    // Russia's border for this era from baked historical-basemaps data, drawn
-    // bright in the era's headline legend color (its first territory).
-    const geom = window.HISTORICAL_BORDERS && window.HISTORICAL_BORDERS[period?.year];
-    const color = period?.territories?.[0]?.color || "magenta";
-    const hist = geom ? [{
+    // Each legend entity of this era as its own bright outline, in its own
+    // legend colour (borders-data.js stores an array of { color, geometry }).
+    const entries = (window.HISTORICAL_BORDERS && window.HISTORICAL_BORDERS[period?.year]) || [];
+    const hist = entries.map(e => ({
       type: "Feature",
-      properties: { __hist: true, __color: color, __name: period?.title || "" },
-      geometry: geom
-    }] : [];
+      properties: { __hist: true, __color: e.color || "magenta", __name: period?.title || "" },
+      geometry: e.geometry
+    }));
 
     globe.polygonsData([...modern, ...hist]);
   }, [ready, countriesReady, period, periodIdx]);
